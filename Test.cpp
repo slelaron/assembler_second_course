@@ -4,33 +4,102 @@ using namespace std;
 
 void my_memcpy(void* dest, const void* source, size_t size);
 
-char tmp[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'm', 'n', 'e', 'q', 'w', 't', 'r'};
-char e[20];
+const int maxN = 1000;
+const int maxT = 3e7 + 9;
 
-int a[129];
-int b[200];
+char a[maxN];
+char b[2 * maxN];
+char c[2 * maxN];
+
+char d[maxT];
+char k[maxT];
+char t[maxT];
 
 int main()
 {
-	FILE* output = freopen("output", "w", stdout);
-	
-	for (int i = 0; i < 129; i++)
+	for (int i = 0; i < maxN; i++)
 	{
-		a[i] = i;
+		a[i] = rand() % 256 - 128;
 	}
-	cout << sizeof(a) << ' ' << (long long)a << ' ' << (long long)a + sizeof(a) << endl;
-	for (int i = 0; i < 129; i++)
+	for (int i = 0; i < 1000; i++)
 	{
-		cout << (int)b[i] << ' ';
+		for (int j = 0; j < 2 * maxN; j++)
+		{
+			b[j] = 0;
+			c[j] = 0;
+		}
+		int aa = rand() % maxN;
+		int bb = rand() % maxN;
+		int fst = min(aa, bb);
+		int dist = abs(aa - bb);
+		int snd = rand() % maxN;
+		my_memcpy(b + snd, a + fst, dist);
+		memcpy(c + snd, a + fst, dist);
+		bool flag = true;
+		for (int j = 0; j < 2 * maxN; j++)
+		{
+			if (c[j] != b[j])
+			{
+				flag = false;
+				break;
+			}
+		}
+		if (flag)
+		{
+			cout << "OK" << endl;
+		}
+		else
+		{
+			cout << "Fail " << snd << ' ' << fst << ' ' << dist << endl;
+			for (int j = 0; j < maxN; j++)
+			{
+				cout << (int)a[j] << ' ';
+			}
+			cout << endl;
+			for (int j = 0; j < 2 * maxN; j++)
+			{
+				cout << "(" << (int)b[j] << ", " << (int)c[j] << ") ";
+			}
+			cout << endl;
+			break;
+		}
 	}
-	cout << endl;
-	my_memcpy(b + 1, a + 2, sizeof(a) - 8);
-	for (int i = 0; i < 129; i++)
-	{
-		cout << (int)b[i] << ' ';
-	}
-	cout << endl;
 
-	fclose(output);
+	for (int j = 0; j < maxT; j++)
+	{
+		d[j] = rand() % 256 - 128;
+	}
+
+	int now = clock();
+	for (int j = 0; j < 100; j++)
+	{
+		my_memcpy(k + 1, d + 2, sizeof(d) - 3);
+	}
+	int have = clock();
+	cout << (double)(have - now) / CLOCKS_PER_SEC << endl;
+	now = clock();
+	for (int j = 0; j < 100; j++)
+	{
+		memcpy(t + 1, d + 2, sizeof(d) - 3);
+	}
+	have = clock();
+	cout << (double)(have - now) / CLOCKS_PER_SEC << endl;
+	bool correct = true;
+	for (int i = 0; i < maxT; i++)
+	{
+		if (k[i] != t[i])
+		{
+			correct = false;
+		}
+	}
+	if (correct)
+	{
+		cout << "last is OK" << endl;
+	}
+	else
+	{
+		cout << "last Failed" << endl;
+	}
+	
 	return 0;
 }

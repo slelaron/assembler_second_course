@@ -70,22 +70,6 @@ get_padding:
 	ret
 
 a_bigger_b:
-	push rdx
-	push rdi 
-	push rsi
-	add rdi, rdx
-	add rsi, rdx 
-	mov rcx, 24
-	neg rcx
-	mov rdx, [rsi + rcx]
-	mov [rdi + rcx], rdx
-	sub rcx, 8
-	mov rdx, [rsi + rcx]
-	mov [rdi + rcx], rdx
-	pop rsi
-	pop rdi
-	pop rdx
-
 	mov rcx, [rsi + 8]
 	movq xmm0, rcx
 	mov rcx, [rsi]
@@ -102,21 +86,6 @@ a_bigger_b:
 	jmp continuation
 
 a_less_b:
-	push rdx
-	push rdi 
-	push rsi
-	add rdi, rdx
-	add rsi, rdx 
-	mov rcx, 16
-	mov rdx, [rsi + rcx]
-	mov [rdi + rcx], rdx
-	add rcx, 8
-	mov rdx, [rsi + rcx]
-	mov [rdi + rcx], rdx
-	pop rsi
-	pop rdi
-	pop rdx
-
 	movdqa xmm0, [rsi + rax]
 	mov rcx, rbx
 	sub rcx, rax
@@ -137,6 +106,23 @@ memcpy_func:
 	mov [rdi + rdx - 8], rax
 	mov rax, [rsi + rdx - 16]
 	mov [rdi + rdx - 16], rax
+
+	push rdi 
+	push rsi
+	push rdx
+	add rdi, rdx
+	add rsi, rdx 
+	mov rcx, 24
+	neg rcx
+	mov rdx, [rsi + rcx]
+	mov [rdi + rcx], rdx
+	sub rcx, 8
+	mov rdx, [rsi + rcx]
+	mov [rdi + rcx], rdx
+	pop rdx
+	pop rsi
+	pop rdi
+
 	mov rbx, rdi
 	call get_padding
 	push rax
