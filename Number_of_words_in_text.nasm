@@ -67,7 +67,7 @@ l_0:
 count_bits:
 	pmovmskb eax, xmm0
 	popcnt ebx, eax
-	add edx, ebx
+	add rdx, rbx
 	ret
 
 preparing:
