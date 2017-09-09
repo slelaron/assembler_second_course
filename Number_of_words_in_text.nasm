@@ -65,13 +65,9 @@ l_0:
 	ret
 
 count_bits:
-	movq rax, xmm0
-	popcnt rbx, rax
-	add rdx, rbx
-	psrldq xmm0, 8
-	movq rax, xmm0
-	popcnt rbx, rax
-	add rdx, rbx
+	pmovmskb eax, xmm0
+	popcnt ebx, eax
+	add edx, ebx
 	ret
 
 preparing:
@@ -171,7 +167,6 @@ ending:
 
 testing:
 	mov rax, rdx
-	shr rax, 3
 	inc rax
 	shr rax, 1
 	pop rdx

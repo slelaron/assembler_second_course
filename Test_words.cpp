@@ -5,7 +5,7 @@ using namespace std;
 
 int count_words(char* tmp, size_t);
 
-const int maxN = 300;
+const int maxN = 1e6 + 9;
 
 char text[maxN];
 
@@ -47,7 +47,7 @@ int main()
 			text[i] = 'a';
 		}
 	}
-	for (int test = 0; test < 100; test++)
+	for (int test = 0; test < 300; test++)
 	{
 		int a = rand() % maxN;
 		int b = rand() % maxN;
