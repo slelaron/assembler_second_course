@@ -5,46 +5,79 @@ using namespace std;
 
 int count_words(char* tmp, size_t);
 
-char text[] = "In computing, Streaming SIMD Extensions (SSE) is an SIMD instruction set extension to the x86 architecture, designed by Intel and introduced in 1999 in their Pentium III series of processors shortly after the appearance of AMD's 3DNow!. SSE contains 70 new instructions, most of which work on single precision floating point data. SIMD instructions can greatly increase performance when exactly the same operations are to be performed on multiple data objects. Typical applications are digital signal processing and graphics processing.";
-		    //" anssi. C++ International Standard   (second  edition,   2003-10-15)  a  "
-			//"100000110011000000000000110000000100100000010100000001001000000000010110
-char that[4000];
+const int maxN = 300;
 
+char text[maxN];
+
+int get_answer(int fst, size_t dist)
+{
+	bool prev = true;
+	int answer = 0;
+	for (size_t i = 0; i < dist; i++)
+	{
+		bool now;
+		if (text[fst + i] == ' ')
+		{
+			now = true;
+		}
+		else
+		{
+			now = false;
+		}
+		if (now != prev && prev)
+		{
+			answer++;
+		}
+		prev = now;
+	}
+	return answer;
+}
 
 int main()
 {
-	int sz = 0;
-	for (char* a = text + 1; (long long)a % 16 != 0; a++, sz++);
-	cout << sizeof(text) - 1 << endl;
-	int cnt = count_words(text, sizeof(text));
-	//cout << bitset<64>(cnt) << endl;
-	cout << cnt << endl;
-	long long another = 0;
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < maxN; i++)
 	{
-		another <<= 8;
-		another ^= text[i];
+		int now = rand();
+		if (now % 2 == 0)
+		{
+			text[i] = ' ';
+		}
+		else
+		{
+			text[i] = 'a';
+		}
 	}
-	cout << std::bitset<64>(another);
-	for (int i = 0; i < 8; i++)
+	/*for (int test = 0; test < 20; test++)
 	{
-		another <<= 8;
-		another ^= text[8 + i];
-	}
-	cout << std::bitset<64>(another) << endl;
-	long long here = 0;
-	for (int i = 0; i < 8; i++)
-	{
-		here <<= 8;
-		here ^= that[i];
-	}
-	cout << std::bitset<64>(here) << endl;
-	/*here = 0;
-	for (int i = 0; i < 8; i++)
-	{
-		here <<= 8;
-		here ^= that[8 + i];
-	}
-	cout << std::bitset<64>(here) << endl;*/
+		int a = rand() % maxN;
+		int b = rand() % maxN;
+		int fst = min(a, b);
+		size_t dist = (size_t)abs(a - b);
+		int answer = get_answer(fst, dist);
+		int cnt = count_words(text + fst, dist);
+		if (cnt == answer)
+		{
+			cout << "Ok " << cnt << ' ' << answer << endl;
+		}
+		else
+		{
+			cout << "Failed " << cnt << ' ' << answer << endl;
+			cout << fst << ' ' << dist << endl;
+			for (int i = fst; i < (int)(fst + dist); i++)
+			{
+				if (text[i] == ' ')
+				{
+					cout << '_' << ' ';
+				}
+				else
+				{
+					cout << 'a' << ' ';
+				}
+			}
+			cout << endl;
+			break;
+		}
+	}*/
+	cout << count_words(text + 190, 25) << ' ' << get_answer(190, 25) << endl;
 	return 0;
 }

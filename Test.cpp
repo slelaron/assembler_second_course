@@ -14,6 +14,7 @@ char c[2 * maxN];
 char d[maxT];
 char k[maxT];
 char t[maxT];
+char v[maxT];
 
 int main()
 {
@@ -77,6 +78,7 @@ int main()
 	}
 	int have = clock();
 	cout << (double)(have - now) / CLOCKS_PER_SEC << endl;
+	
 	now = clock();
 	for (int j = 0; j < 100; j++)
 	{
@@ -84,6 +86,20 @@ int main()
 	}
 	have = clock();
 	cout << (double)(have - now) / CLOCKS_PER_SEC << endl;
+
+	now = clock();
+	for (int j = 0; j < 100; j++)
+	{
+		int a = 1;
+		int b = 2;
+		for (size_t i = 0; i < sizeof(d) - 3; i++)
+		{
+			v[i + a] = d[i + b];
+		}
+	}
+	have = clock();
+	cout << (double)(have - now) / CLOCKS_PER_SEC << endl;
+	
 	bool correct = true;
 	for (int i = 0; i < maxT; i++)
 	{

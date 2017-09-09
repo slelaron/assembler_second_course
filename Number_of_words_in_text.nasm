@@ -75,12 +75,11 @@ count_bits:
 	ret
 
 preparing:
-	mov rax, 0x00000000000000F
 	mov rbx, rdi
 	mov rcx, 16
-	and rbx, rax
+	and rbx, 15
 	sub rcx, rbx
-	and rcx, 15
+	;and rcx, 15
 
 	mov rax, [rdi + 8] ; correct!
 	movq xmm0, rax
@@ -122,7 +121,7 @@ count_words_internal:
 	push rcx
 	push rdx
 
-	dec rsi
+	;dec rsi
 
 	call preparing
 

@@ -225,7 +225,7 @@ continuation:
 internal_loop_0:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 16
 	movntdq [rdi], xmm1
@@ -238,7 +238,7 @@ internal_loop_0:
 internal_loop_1:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 15
 	movntdq [rdi], xmm1
@@ -251,7 +251,7 @@ internal_loop_1:
 internal_loop_2:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 14
 	movntdq [rdi], xmm1
@@ -264,7 +264,7 @@ internal_loop_2:
 internal_loop_3:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 13
 	movntdq [rdi], xmm1
@@ -277,7 +277,7 @@ internal_loop_3:
 internal_loop_4:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 12
 	movntdq [rdi], xmm1
@@ -290,7 +290,7 @@ internal_loop_4:
 internal_loop_5:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 11
 	movntdq [rdi], xmm1
@@ -303,7 +303,7 @@ internal_loop_5:
 internal_loop_6:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 10
 	movntdq [rdi], xmm1
@@ -316,7 +316,7 @@ internal_loop_6:
 internal_loop_7:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 9
 	movntdq [rdi], xmm1
@@ -329,7 +329,7 @@ internal_loop_7:
 internal_loop_8:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 8
 	movntdq [rdi], xmm1
@@ -342,7 +342,7 @@ internal_loop_8:
 internal_loop_9:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 7
 	movntdq [rdi], xmm1
@@ -355,7 +355,7 @@ internal_loop_9:
 internal_loop_10:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 6
 	movntdq [rdi], xmm1
@@ -368,7 +368,7 @@ internal_loop_10:
 internal_loop_11:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 5
 	movntdq [rdi], xmm1
@@ -381,7 +381,7 @@ internal_loop_11:
 internal_loop_12:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 4
 	movntdq [rdi], xmm1
@@ -394,7 +394,7 @@ internal_loop_12:
 internal_loop_13:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 3
 	movntdq [rdi], xmm1
@@ -407,7 +407,7 @@ internal_loop_13:
 internal_loop_14:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 2
 	movntdq [rdi], xmm1
@@ -420,7 +420,7 @@ internal_loop_14:
 internal_loop_15:
 	cmp rdx, 16
 	jl exit
-	movdqa xmm1, [rsi]
+	movntdqa xmm1, [rsi]
 	movdqa xmm2, xmm1
 	palignr xmm1, xmm0, 1
 	movntdq [rdi], xmm1
