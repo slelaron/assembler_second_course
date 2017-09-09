@@ -47,7 +47,7 @@ int main()
 			text[i] = 'a';
 		}
 	}
-	/*for (int test = 0; test < 20; test++)
+	for (int test = 0; test < 100; test++)
 	{
 		int a = rand() % maxN;
 		int b = rand() % maxN;
@@ -77,7 +77,6 @@ int main()
 			cout << endl;
 			break;
 		}
-	}*/
-	cout << count_words(text + 190, 25) << ' ' << get_answer(190, 25) << endl;
+	}
 	return 0;
 }

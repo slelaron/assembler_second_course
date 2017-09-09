@@ -95,7 +95,6 @@ preparing:
 	xorpd xmm1, xmm2 ; fill xmm with spaces
 
 	pcmpeqb xmm0, xmm1
-	movdqa xmm3, xmm0
 	xorpd xmm2, xmm2 ; make null
 	pcmpeqb xmm0, xmm2 ; bit reverse
 
@@ -107,6 +106,8 @@ preparing:
 	mov rcx, rdx
 	xor rdx, rdx
 	call shift_left
+	movdqa xmm3, xmm0
+	pcmpeqb xmm3, xmm2
 	movdqa xmm2, xmm0
 	pslldq xmm2, 1
 	xorpd xmm0, xmm2
@@ -114,14 +115,13 @@ preparing:
 	xor rdx, rdx
 
 	call count_bits
+
 	ret
 
 count_words_internal:
 	push rbx
 	push rcx
 	push rdx
-
-	;dec rsi
 
 	call preparing
 
@@ -143,6 +143,7 @@ first_loop:
 	jge first_loop
 
 ending:
+	;jmp testing
 	movdqa xmm2, xmm3
 	add rdi, rsi
 	sub rdi, 16
