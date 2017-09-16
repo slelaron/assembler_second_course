@@ -22,19 +22,43 @@ struct trampoline <R(Main_args...)>: common_part
 {	
 	template <typename F>
 	trampoline(F const& f):
+		deleter(delete_func<F>),
+		copier(copy_func<F>),
+		caller(do_call<F>),
 		object(new F(f)),
-		deleter(delete_func<F>)
+		code(get_code())
 	{
-		if (!initialized)
-		{
-			allocate();
-			initialized = true;
-		}
-		assert(!addresses.empty());
-		code = *addresses.begin();
-		char* pcode = static_cast <char*> (code);
-		addresses.erase(addresses.begin());
+		fill_code();
+	}
 
+	trampoline(const trampoline <R(Main_args...)>& another):
+		deleter(another.deleter),
+		copier(another.copier),
+		caller(another.caller),
+		object(another.copier()),
+		code(get_code())
+	{
+		fill_code();
+	}
+
+	~trampoline()
+	{
+		addresses.insert(code);
+		deleter(object);
+	}
+
+	R (*get() const)(Main_args...)
+	{
+		return reinterpret_cast <R (*)(Main_args...)> (code);
+	}
+
+	private:
+
+	
+	void fill_code()
+	{
+		char* pcode = static_cast <char*> (code);
+		
 		//415B pop r11
 		*pcode++ = 0x41;
 		*pcode++ = 0x5b;
@@ -74,7 +98,7 @@ struct trampoline <R(Main_args...)>: common_part
 		//49BB mov r11, imm
 		*pcode++ = 0x49;
 		*pcode++ = 0xbb;
-		*(void**)pcode = (void*)do_call<F>;
+		*(void**)pcode = (void*)caller;
 		pcode += 8;
 		
 		//41FFD3 call r11
@@ -106,18 +130,18 @@ struct trampoline <R(Main_args...)>: common_part
 		*pcode++ = 0xc3;
 	}
 
-	~trampoline()
+	void* get_code()
 	{
-		addresses.insert(code);
-		deleter(object);
+		if (!initialized)
+		{
+			allocate();
+			initialized = true;
+		}
+		assert(!addresses.empty());
+		code = *addresses.begin();
+		addresses.erase(addresses.begin());
+		return code;
 	}
-
-	R (*get() const)(Main_args...)
-	{
-		return reinterpret_cast <R (*)(Main_args...)> (code);
-	}
-
-	private:
 
 	struct __attribute__((packed)) wrapper
 	{
@@ -149,10 +173,18 @@ struct trampoline <R(Main_args...)>: common_part
 	{
 		delete (static_cast <F*> (object));
 	}
+
+	template <typename F>
+	static void* copy_func(void* object)
+	{
+		return new F(*(F*)object);
+	}
 	
+	void (*deleter)(void*);
+	void* (*copier)(void*);
+	R (*caller)(wrapper, Main_args...);
 	void* object;
 	void* code;
-	void (*deleter)(void*);
 
 	static const size_t page_size = 4096;
 	static const size_t page_amount = 10;
@@ -161,9 +193,9 @@ struct trampoline <R(Main_args...)>: common_part
 int main()
 {
 
-	trampoline <long long(int, int, int, int, int, int, int, int, int, int)> tr([&](int a, int b, int c, int d, int e, int f, int g, int h, int t, int r) { return (long long)a * b * c * d * e * f * g * h * t * r;});
+	trampoline <long long(long long, long long, long long, long long, long long, long long, long long, long long, long long, long long)> tr([&](long long a, long long b, long long c, long long d, long long e, long long f, long long g, long long h, long long t, long long r) { return (long long)a * b * c * d * e * f * g * h * t * r;});
 
-	trampoline <long long(int, int, int)> tr1([&](int a, int b, int c) { return (long long)a + b + c;});
+	trampoline <long long(long long, long long, long long)> tr1([&](long long a, long long b, long long c) { return (long long)a + b + c;});
 
 	auto p = tr.get();
 	auto r = tr1.get();
