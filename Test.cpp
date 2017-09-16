@@ -5,7 +5,7 @@ using namespace std;
 void my_memcpy(void* dest, const void* source, size_t size);
 
 const int maxN = 1000;
-const int maxT = 3e7 + 9;
+const int maxT = 9e7 + 9;
 
 char a[maxN];
 char b[2 * maxN];
